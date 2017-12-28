@@ -8,10 +8,19 @@ import numpy as np
 
 # catch dari server client ke 1
 def downstream1(in_q):
-    stream = urlopen('http://192.168.150.103:5000/video_feed')
+    try:
+        stream = urlopen('http://127.0.0.1:5000/video_feed')
+    except Exception as e:
+        print("retry connection")
+        downstream1(in_q)
+    else:
+        pass
     bytes = b''
     while True:
         bytes += stream.read(1024)
+        if (bytes == b'\r\n\r\n'):
+            print("break")
+            break
         a = bytes.find(b'\xff\xd8')
         b = bytes.find(b'\xff\xd9')
         if a != -1 and b != -1:
@@ -21,6 +30,7 @@ def downstream1(in_q):
 
             # taruh hasil catch nya di in_q untuk multi threading
             in_q.put(img)
+    downstream1(in_q)
 
 
 # catch dari server client ke 2

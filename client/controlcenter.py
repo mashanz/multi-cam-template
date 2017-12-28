@@ -22,15 +22,15 @@ def showdownstream(in_q):
 if __name__ == "__main__":
     # initialisasi antrian thread
     q1 = Queue()
-    q2 = Queue()
+    # q2 = Queue()
 
     # initialisasi fungsi thread
     t1 = Thread(target=downstream1, args=(q1,))
-    t2 = Thread(target=downstream2, args=(q2,))
+    # t2 = Thread(target=downstream2, args=(q2,))
 
     # jalanin sub sub thread yang sudah di inisialisasi
     t1.start()
-    t2.start()
+    # t2.start()
 
     ######################################################
     # THREAD UTAMA
@@ -38,4 +38,4 @@ if __name__ == "__main__":
     while True:
         # panggil fungsi showdownstream(in_q)
         showdownstream(q1)
-        showdownstream(q2)
+        # showdownstream(q2)
