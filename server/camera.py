@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import imutils
-from algoritma import algoritma
+from algoritma import algoritma, reset
 # from skimage.morphology import opening
 
 ###########################################################
@@ -14,6 +14,7 @@ class VideoCamera(object):
     # Fungsi untuk inisialisasi kamera client
     def __init__(self):
         self.video = cv2.VideoCapture(0)
+        reset()
 
     # Fungsi untuk melepas koneksi camera client bila sudah tidak digunakan
     def __del__(self):

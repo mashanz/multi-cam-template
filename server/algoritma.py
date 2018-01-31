@@ -2,6 +2,21 @@ import cv2
 import numpy as np
 import imutils
 from matplotlib import pyplot as plt
+import csv
+import time
+
+fieldnames  = ['time','count']
+filelog     = 'cars_count.csv'
+
+def reset():
+    with open(filelog, 'w', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+
+def write(time, count):
+    with open(filelog, 'a', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writerow({fieldnames[0]: time, fieldnames[1]: count})
 
 def algoritma(image):
     # resize
@@ -41,7 +56,8 @@ def algoritma(image):
     for (x, y, w, h) in cars:
         cv2.rectangle(img, (x,y), (x+w,y+h), (0,0,255), 2)
         ncars += 1
-
+    ticks = time.localtime(time.time())
+    write(ticks, ncars)
     print(ncars)
 
     return img
